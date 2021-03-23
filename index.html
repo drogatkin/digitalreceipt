@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+   <head>
+   <title>WalletWizz</title>
+   <link rel="icon" type="image/x-icon" href="./image/favicon.ico" />
+   <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/v7+AGBg8AD///8AAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMzMzMzMzMzMzAAAAAAAAMzAAAAAAAAADMDMDMiMzMzMwMzMyIzMzMzAzMzIjMwADMDMDMiAzMAMwMwMwAAMzAzAzMzJDMzMzMDMzMwMzMzMwAAAAAAAAAzAAAAAAAAATMAATMzMzMzMzAAAAAAAAMzMzMzMAAAMzMzMzMzMzMzMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rel="icon" type="image/x-icon" />
+   <link rel="stylesheet" href="./css/font-awesome.min.css">   
+      
+  <style type="text/css">
+     <!--/* <![CDATA[ */
+          @import url(./css/base.css);
+          @import url(./css/checkbox.css);
+            BODY, TD, FONT, INPUT, SELECT, TEXTAREA { font-family: Lucida Grande,Verdana,Arial; font-size: 11px; }
+         body {height:100%}
+         P {margin:0.2em 1em 0.1em 1em}        
+ 
+        #container {
+         min-height:100%;
+         position:absolute;
+         height:100%;
+         width:100%;
+         top:0;left:0;
+        }
+        #footer {
+          position:absolute;
+          bottom:0;
+          width:100%;
+          background:#ffffff;
+          /*height:4em;*/
+        }
+        #thick_footer {background-color:#0FBC71;position:absolute;
+          bottom:0;
+          height:60px;
+          width:100%;
+          }
+        #status {
+             padding-left:10em;
+             height:2em;
+             background:#fee;
+        }
+        #close_btn {
+           float:right;
+           display:inline;
+           cursor:pointer;
+           }
+       #payload {
+        display:table-cell;
+        position:absolute;
+        top:130px;
+        vertical-align:middle;
+        width:100%;
+        height:*;
+        padding-top:0.5em;
+        overflow:auto;
+       }
+       #modal_background {
+         position: absolute;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+ 
+      	 z-index: 99;
+	     background-color:#333333;
+	     display: none;
+	     opacity: 0.40;
+	     filter: alpha(opacity=40)
+     }  
+     .thick_header { background-image:url(./image/thick_hdr_bkg.png); background-repeat:repeat-x; height:130px; width:100%;} 
+       /* ]]> */-->
+  </style>
+  <style>
+  .passwd-togg {
+       padding-left: 20px;
+        cursor: pointer;
+        min-width: 1px;    
+        /*width: 36px;*/        
+        background: url(./image/eye.png) no-repeat;        
+   }
+       .login_block { display:inline; float:right;padding-right:1em;padding-top:1em;}
+            td, th {
+           border: 0px solid black;
+         }
+         table {
+           border-collapse: collapse;border-spacing:0
+         }      
+          .i-btn        {
+    border: medium none;
+    display: inline-block;
+    outline: 0px none;
+    padding: 6px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none !important;
+    color: #FFF;
+    background-color: #000;
+    text-align: center;
+    transition: all 0.2s ease-out 0s;
+    cursor: pointer;
+    white-space: nowrap;
+        background-color: #0FBC71;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    }
+    .mesup  {
+	margin-top:-800px;
+	margin-right:20px;
+	transition:all 1s ease, opacity 1s ease .5s;
+	opacity:0;
+	float:right;
+	width:212px;
+	height:80px;
+	border-bottom:1px solid #ccc;
+	border-radius:4px;
+	//background:linear-gradient(top, rgba(247,247,247,1) 0%,rgba(229,229,229,1) 100%);
+        background:white;
+	line-height:1;
+	box-shadow:0px 3px 5px rgba(0,0,0,.2);
+	position:relative;
+	z-index:100;
+   }
+   .mesup p {
+     margin:2em 1em; 
+     display:block;
+     /*width:200px;
+     height:80px;*/
+     color:#999;
+     text-shadow:0px -1px 1px #fff,0px 1px 1px #fff;}
+       .content {}
+    .mesup .close {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      transition: all 200ms;
+      font-size: 10px;
+      font-weight: normal;
+       text-decoration: none;
+      color: #333;
+    }
+    /*
+    .mesup:target {
+        margin-top:-800px;
+        opacity:0; 
+    } */
+
+   .sidenav {
+      height: 100%; /* 100% Full-height */
+      width: 0; /* 0 width - change this with JavaScript */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Stay on top */
+      top: 0;
+      right: 0;
+      background-color: #111; /* Black*/
+      overflow-x: hidden; /* Disable horizontal scroll */
+      padding-top: 60px; /* Place content 60px from the top */
+      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+   }
+
+/* The navigation menu links */
+   .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s
+   }
+
+   /* When you mouse over the navigation links, change their color */
+   .sidenav a:hover, .offcanvas a:focus{
+       color: #f1f1f1;
+   }
+   .sidenav .closebtn {
+       position: absolute;
+       top: 0;
+       right: 25px;
+       font-size: 36px;
+       margin-left: 50px;
+    }
+    
+    .error_border {border: 1px solid red !important}
+    
+    .pabout {font-size: 18px !important; margin-top:1em;}
+
+    @media screen and (max-height: 450px) {
+       .sidenav {padding-top: 15px;}
+       .sidenav a {font-size: 18px;}
+    }
+  </style>
+  <script src="./js/ajaxhelper.js" ></script>
+  <script src="./js/common.js" ></script>
+  <script src="./js/form.js" ></script>
+  <script>
+      // todo dynamically load css insert/head.css
+      // and js insert/headjs.htmt 
+  </script>
+  <script>
+     var lo=0.0, la=0.0;
+     
+     function init() {
+        checkLogin();
+        if (window.location.hash) {
+            var codes = window.location.hash.split('/');
+            //alert('hash:'+window.location.hash+' cod:'+codes[0]);
+            if (codes.length == 2) {
+                dimBackground();
+                showPopup('./webbee/Signup?email='+codes[1]+'&activation_code='+codes[0].substring(1), '70&', function() {
+                   document.forms.signup.nick.onblur = checkNick;
+                   document.forms.signup.email.onblur = checkEmail;
+                });
+                
+            } else {
+               var code = codes[0].substring(1)
+               if (code == 'signoff')
+                  signoff()
+               else   {
+                   if (code.startsWith('$'))
+                      newPass(code.substring(1))
+                    else
+                       confirmEmail(code);
+               }
+            }
+            return;
+        }
+           
+        if (navigator.geolocation) 
+            navigator.geolocation.getCurrentPosition(captPosition);
+     }
+     
+     function checkEmail() {
+       makeJSONAjaxCall('./webbee/Signup/ajax/isEmailAvail', 'email='+encodeURIComponent(document.forms.signup.email.value), true, function(obj) {
+          // TOOD use document.forms.signup.email.classList.add('error_border') and .remove
+          if (obj.avail === true)
+            markErr(document.forms.signup.email, false);
+          else {
+             doMes('Address '+document.forms.signup.email.value+' is already used by other account');
+             markErr(document.forms.signup.email, true);
+          }
+       });
+     }
+     
+     function checkNick() {
+       makeJSONAjaxCall('./webbee/Signup/ajax/isNickAvail', 'nick='+encodeURIComponent(document.forms.signup.nick.value), true, function(obj) {
+          if (obj.avail === true)
+            markErr(document.forms.signup.nick, false);
+          else {
+             doMes('Name '+document.forms.signup.nick.value+' is already taken');
+             markErr(document.forms.signup.nick, true);
+          }
+       });
+     }
+     
+     function reqstReset() {
+        var bfrm = document.forms.updeml;
+        makeJSONAjaxCall('./webbee/Updeml', formValues2String(bfrm), true, function(stat) {
+         if (stat .error) {
+             doMes('An error encountered: '+stat.error);
+
+             closesign();
+             return;
+         }
+         doMes('The request accepted, watch for a reset e-mail at '+stat.email) // TODO potentiall e-mail leak
+         closesign();
+      });
+     }
+     
+     function updtPassw() {
+         var bfrm = document.forms.updpassw;
+         if(bfrm.password.value=='' || !validPasswd(bfrm.password.value)) {
+             doMes('Your password must be at least 8 characters and must include at least one number, one uppercase and one lowercase letter.');
+             return;
+         }
+        makeJSONAjaxCall('./webbee/Updpassw', formValues2String(bfrm), true, function(stat) {
+         if (stat .error) {
+             doMes('An error encountered: '+stat.error);
+
+             closesign();
+             return;
+         }
+         doMes('Password has been updated')
+         closesign();
+      });
+     }
+     
+     function markErr(el, err) {
+        if (err) {
+           if (!el.classList.contains('error_border'))
+             el.classList.add('error_border')
+        } else
+          if (el.classList.contains('error_border'))
+             el.classList.remove('error_border')
+     }
+     
+     function captPosition(position) {
+        la = position.coords.latitude; 
+        lo = position.coords.longitude;
+     }
+     function betasign() {
+        dimBackground();
+    	showPopup('./webbee/Betarequest?location_latitude='+la+'&location_longitude='+lo, '60%');
+     }
+     function closesign() {
+        var modal_box = getElement('popup');
+        modal_box.style.display='none';
+        returnBackground ();
+    }
+    function dimBackground() {
+      var backgroundDiv = document.getElementById('modal_background');
+      if (!backgroundDiv) {
+         backgroundDiv = document.createElement('div');
+         backgroundDiv.id = 'modal_background';
+         document.body.appendChild(backgroundDiv);
+         backgroundDiv.onclick = dismissModel
+      }
+      backgroundDiv.style.display = 'block';   
+   }
+   function dismissModel() {
+      closesign()
+      returnBackground ()
+   }
+   function returnBackground () {
+       var backgroundDiv = document.getElementById('modal_background');
+       if (backgroundDiv)
+          backgroundDiv.style.display='none';
+   }
+   
+   function showPopup(url, height, postSet) {
+      var popupDiv  = document.getElementById('popup');
+      if (!popupDiv) {
+         popupDiv = document.createElement('div');
+         popupDiv.id = 'popup';
+         popupDiv.style.position='absolute';
+         popupDiv.style.display='none';
+         popupDiv.style.width='50%';
+         popupDiv.style.backgroundColor='#8CBEB2';
+         popupDiv.style.border='2px solid black';
+         popupDiv.style.padding='2em 5em 4em 3em';
+         popupDiv.style.zIndex= 100;
+         popupDiv.innerHTML = 'loading';
+         document.body.appendChild(popupDiv);
+      }
+      if (height)
+            popupDiv.style.height=height;
+      else
+             popupDiv.style.height='80%';
+      makeGenericAjaxCall(url, '', true, function(html) {
+          popupDiv.innerHTML = html;
+          popupDiv.style.display = 'block';
+          centerElement(popupDiv);
+          if (postSet)
+             postSet();
+      });
+      //frames.popup_frm.location.href=url;
+      //popupDiv.style.display = 'block';
+      //centerElement(popupDiv);
+   }
+   function sendreqst() {
+      // validate required
+      var bfrm = document.forms.betarequest;
+      if(bfrm.email.value=='' || !validEmail(bfrm.email.value)) {
+        doMes('Specify a valid e-mail');
+        return;
+      }
+      //sendreqst1() ;
+      validSubmit(bfrm.email.value, sendreqst1);
+    }
+    function sendreqst1() {
+       var bfrm = document.forms.betarequest;
+       makeGenericAjaxCall('./webbee/Betarequest', formValues2String(bfrm), true, function(stat) {
+         if (stat .startsWith('ok')) {
+             doMes('The request has been processed successfully');
+             
+             closesign();
+             return;
+         }
+         doMes(stat)
+         closesign();
+      });
+    }
+    function signmeup() {
+      var bfrm = document.forms.signup;
+      if(bfrm.email.value=='' || !validEmail(bfrm.email.value)) {
+        doMes('Specify a valid e-mail');
+        return;
+      }
+      if(bfrm.passwd.value=='' || !validPasswd(bfrm.passwd.value)) {
+        doMes('Your password must be at least 8 characters and must include at least one number, one uppercase and one lowercase letter.');
+        return;
+      }
+      if (!bfrm.confirm_terms.checked)  {
+        doMes('Please agree with terms and conditionns.');
+        return;
+      }
+      makeJSONAjaxCall('./webbee/Signup', formValues2String(bfrm), true, function(stat) {
+         checkLogin(stat);
+         if (stat.error)
+           doMes('Can\'t sign up, an invalid or already used token, or an e-mail')
+         closesign();
+      });
+    }
+    
+    function confirmEmail(code) {
+         makeJSONAjaxCall('./webbee/Emailconfm', 'confm_code='+code, true, function(stat) {
+           if(stat.ok)
+              doMes('Thank you for confirming e-mail')
+            else
+              doMes('Something went wrong, try to reset e-mail again')
+      });
+    }
+    
+    function validEmail(em) {
+       var patt = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+       return patt.test(em);        
+    } 
+    function validPasswd(pwd) {
+       var patt = /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/;
+       return patt.test(pwd);
+    }
+    function validSubmit(em, submit) {
+       makeJSONAjaxCall('./webbee/Betarequest/ajax/wasSubmitted', 'email='+encodeURIComponent(em), true, function(obj) {
+          if (obj.submitted === false)
+            submit();
+          else
+             doMes('Address '+em+' has been used for a request');
+       });
+    }
+    function fillAddress() {
+        doMes('fill address');
+    }
+    function togglePasswd(fld) {
+        // TODO if fld is id or actual object
+        if (typeof fld === 'string' )
+           fld = getElement(fld);
+        if (fld.type == 'password') {
+            fld.type = 'text'
+        } else if (fld.type == 'text')
+            fld.type = 'password'
+    }
+    function checkLogin(state) {
+        if(state) {
+           if (state.profile) {
+              document.querySelector('.login_block').style.display='none'
+              getElement('card_id').innerHTML = htmlEncode(state.profile);
+              loadNav(); //document.querySelector('.top_bar').style.visibility='visible'
+           } else {
+              getElement('card_id').innerHTML = '';
+              document.querySelector('.login_block').style.display='inline'
+              //document.querySelector('.top_bar').style.visibility='collapse'
+              document.querySelector('.sidenav').innerHTML='';
+           }
+        } else {
+          makeJSONAjaxCall('./webbee/Login/ajax/signonDisplay', null, true, 
+          function(res) { 
+            if (res) {
+               checkLogin(res);
+            }
+          });
+        }
+    }
+    function signoff() {
+       makeGenericAjaxCall('./webbee/Login/ajax/logoff', null, true, function (res) {
+           if(res == 'OK')
+              checkLogin({})
+           else
+             doMes('Something went wrong')
+       });
+    }
+    function loadNav() {
+       makeGenericAjaxCall('./webbee/Navtabs', '', true, 
+          function(tabs) {
+             document.querySelector('.sidenav').innerHTML=tabs;
+          });
+    }
+    function login() {
+    	var l = getElement('username').value;
+    	var p = getElement('password').value;
+    	if (!p) {
+    		doMes( 'Password isn\'t provided');
+    		return;
+    	}
+    	if (!l) {
+    		doMes('Login isn\'t provided');
+    		return;
+    	}	
+    	document.body.style.cursor  = 'wait'
+    	makeJSONAjaxCall('./webbee/Login', 'submit=submit&user='+encodeURIComponent(l)+
+    			'&password='+encodeURIComponent(p), true, 
+          function(res) {
+    		document.body.style.cursor  = 'default';
+    	    if(res.error) {
+    	    	doMes(res.error);
+    	    } else {
+    	    	checkLogin(res);
+    	    }
+    	}, function(e) {
+    		document.body.style.cursor  = 'default';
+    		doMes('Login error:'+e);
+    	}) ;
+    }
+    function openNav() {
+       getElement('TabSidenav').style.width = "250px";
+    }
+    function closeNav() {
+       getElement('TabSidenav').style.width = "0";
+    }
+    function contactUs() {
+        dimBackground();
+    	showPopup('./webbee/Contactus', '78%');
+    }
+    function mobileBeta() {
+        dimBackground();
+        showPopup('./webbee/Contactus?message_category=beta&topic=Android beta test', '76');
+    }
+    function fillId() {
+          document.forms.updeml.email.value = getElement('username').value
+    }
+    function resetPass() {
+        dimBackground();
+        showPopup('./webbee/Updeml', '20%', fillId)
+    }
+    function newPass(tok) {
+        dimBackground();
+         showPopup('./webbee/Updpassw?reset_token='+encodeURIComponent(tok), '34')
+    }
+    function aboutus() {
+        dimBackground();
+         showPopup('./aboutus.html', '60')
+    }
+    function sendMess() {
+        var bfrm = document.forms.contactus;
+      if(bfrm.email.value=='' || !validEmail(bfrm.email.value)) {
+        doMes('Specify a valid e-mail');
+        return;
+      }
+      if(bfrm.description.value=='') {
+        doMes('Please, provide a message text');
+        return;
+      }
+      makeGenericAjaxCall('./webbee/Contactus', formValues2String(bfrm), true, function(stat) {
+         if (stat == 'ok') {
+             // by timeout display success
+             closesign();
+             return;
+         }
+         doMes(stat)
+      });
+    }
+    
+    function checkEnter(e) {
+    	var keyPressed = e.keyCode || e.which;
+    	if (keyPressed == 13)
+    		login();
+    }
+    function doMes(mes) {
+        document.querySelector('.mesup .content').innerHTML=mes;
+        document.querySelector('.mesup').style.opacity='1';
+        //document.querySelector('.mesup').style.marginTop = '-505px'
+        document.querySelector('.mesup').style.marginTop = '0px';
+        //alert(mes);
+        setTimeout(hideMes, 7000);
+    }
+    function hideMes() {
+        document.querySelector('.mesup').style.marginTop = '-880px';
+        document.querySelector('.mesup').style.opacity='0';
+    }
+    function htmlEncode(str) {
+       return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/\//g, '&#x2F;')
+        .replace(/>/g, '&gt;');
+    }
+  </script>
+</head>
+<body onload="init()">
+<div id="container" >
+<div class="row header">
+<div class="thick_header">
+<table>
+   <tr>
+       <td style="vertical-align:top;white-space: nowrap;padding-left:4em; padding-right:4em">
+          <span style="margin-left:1em;"><img src="./image/ww_logo.png" style="margin-top:10px">
+          </span>
+       </td>
+       <td style="vertical-align:center">
+         <span class="text_white_big">is an easy way to track and manage your receipts, coupons and loyalty points</span>
+       </td>
+       <td style="vertical-align:top">
+          <span style="margin-left:1em;margin-right:4em"><img src="./image/lady_in_hat.png" style="margin-top:10px">
+          </span>
+       </td>
+       <td style="vertical-align:top;horizontal-align:right">
+         <div class="login_block">
+<table>
+  <tr>
+     <td><input type="text" placeholder="Nick/Card Id" required id="username" name="user" aria-label="Login" spellcheck="false" autofocus/></td>
+     <td><input type="password" placeholder="Password" required id="password" name="password" onkeypress="checkEnter(event)"/></td>
+  </tr>
+  <tr>
+    <td colspan="2" id="error_mes">
+         
+    </td>
+    </tr>
+  <tr>
+    <td colspan="1" >
+         <a class="i-btn" href="javascript:void(0)" onclick="login()">Login</a>
+    </td>
+    <td>
+        <a class="ref_wht" href="javascript:void(0)" onclick="resetPass()">Forgot?</a>
+    </td>
+    </tr>
+</table>
+</div>
+<span style="float:right;padding-right:1em;padding-top:1em;color:white;cursor:pointer" id="card_id" onclick="openNav()"></span><!--span>&#9776;</span-->
+</td>  
+</table>
+</div>
+</div>
+<div id="payload">
+  <table style="margin:auto">
+    <tr>
+       <td>
+         <div style="float: right;background-image:url(./image/feature_box_bg_lefttop.png);background-repeat: no-repeat; background-position:top left;background-size:contain;width:228px;padding:1em 2em 1em 1em" class="text_gray_med">
+         <span style="color:#0EBC70">WalletWizz</span> helps manage the paper trail that is generated by todays modern consumer.<br/> <img src="./image/finance_sm.png"></div>
+      </td>
+      <td rowspan="2" style="text-align:center">
+          <div style="display:table-cell;margin: auto;cursor:pointer;padding:2em"><img src="./image/nav_dial.png" onclick="betasign()" alt="Click here to request a beta test participation" title="Click here to request a beta test participation"></div>
+          Click above to request your e-mail receipt ID
+       </td>
+       <td>
+         <div style="float: left;background-image:url(./image/feature_box_bg_righttop.png);background-repeat: no-repeat; background-position:top left;background-size:contain;width:228px;padding:1em 2em 1em 1em" class="text_gray_med">
+           <span style="color:#0EBC70">WalletWizz</span> is a revolutionary way where your retail world is managed through an easy to use mobile and web app. <br/> <img src="./image/shopbag_sm.png"></div>
+      </td>           
+      </tr>
+      <tr>
+      <td>
+        <div style="float: right;background-image:url(./image/feature_box_bg_lefttop.png);background-repeat: no-repeat; background-position:top left;background-size:contain;width:228px;padding:1em 2em 1em 1em" class="text_gray_med">
+       No more lost receipts, expired coupons, missed warranty dates, or lost loyalty points. <br/> <img src="./image/receipts_sm.png">
+         </div>
+      </td>
+      <td>
+        <div style="float: left;background-image:url(./image/feature_box_bg_righttop.png);background-repeat: no-repeat; background-position:top left;background-size:contain;width:228px;padding:1em 2em 1em 1em" class="text_gray_med">
+          <span style="color:#0EBC70">WalletWizz</span> makes paper receipts a history bringing you to the green digital world. <br/> <img src="./image/bullboard_sm.png">
+        </div>
+     </td>
+     </tr>
+  </table>
+</div>
+
+  <div id="thick_footer">
+    <table style="width:100%">
+      <tr>
+        <td style="color:white;padding:0 2em">CONTACT US<br/>
+          <i class="fa fa-envelope" style="font-size:16px"></i>&nbsp;<a href="javascript:void(0)" class="ref_wht" onclick="contactUs()">Send a message</a><br/>
+          <a href="javascript:void(0)" class="ref_wht" onclick="aboutus()">ABOUT US</a></td>
+       <td style="margin-right:4em;text-align: center; vertical-align: middle;"><a href="https://itunes.apple.com/us/app/walletwizz/id1203512233" target="_blank"><img src="./image/badge_app.svg" alt="iPhone Client" style="padding-top:1em"></a></td>
+       <td style="color:white;margin-right:4em;text-align: center; vertical-align: middle;"><a href="https://play.google.com/store/apps/details?id=com.walletwizz.rnd.mobile.walletwizz" target="_blank"><img src="./image/badge_play.png" style="padding-top:1em" alt="Android Client"></a></td>
+       <td style="color:white;vertical-align: middle;text-align:right">
+        <a href="./term.html" target="_blank" class="ref_wht">Terms</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="./privacy.html" target="_blank" class="ref_wht" style="margin-right:2em;">Privacy</a>
+       </td>
+      </tr>
+   </table>
+  </div>
+</div>
+<div class="mesup">
+    <a class="close" href="javascript:void(0)" onclick="hideMes()">&times;</a>
+        <p class="content">
+                 
+        </p>
+</div>
+<div id="TabSidenav" class="sidenav">
+</div>
+</body>
+</html>
+         
