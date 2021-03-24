@@ -1,0 +1,22 @@
+input[type="checkbox"] {
+   display: none;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+input[type="checkbox"] + label span {   
+    background: url(../image/checkbox_unchecked.png);
+    background-repeat:no-repeat;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+input[type="checkbox"]:checked + label span {
+    background: url(../image/checkbox_checked.png);
+    background-repeat:no-repeat;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+}
